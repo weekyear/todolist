@@ -2,6 +2,7 @@ package com.weekyear.todolist.views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.weekyear.todolist.R;
+import com.weekyear.todolist.databinding.ActivityMainBinding;
 import com.weekyear.todolist.helper.TodoAdapter;
 import com.weekyear.todolist.models.Todo;
 import com.weekyear.todolist.viewmodels.MainViewModel;
@@ -20,14 +23,19 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     TodoAdapter adapter;
+    ActivityMainBinding binding;
+    MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         adapter = new TodoAdapter();
         ViewModelProvider.Factory factory = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication());
-        MainViewModel viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
+
+        binding.setVm(viewModel);
+        binding.setView(this);
 
         viewModel.delete();
         Todo[] initTodos = {
@@ -47,5 +55,11 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView=findViewById(R.id.todoRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
+
+    public void onClick(View view) {
+        viewModel.saveNewTodo();
+        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.todoEditText.getWindowToken(), 0);
     }
 }

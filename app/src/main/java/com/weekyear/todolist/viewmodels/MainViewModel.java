@@ -24,6 +24,9 @@ import java.util.concurrent.Executors;
 public class MainViewModel extends AndroidViewModel {
     public TodoDAO todoDAO;
     private ExecutorService executorService;
+    public LiveData<List<Todo>> AllTodos;
+
+    public String newTodoTitle = "To-Do List";
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -32,6 +35,7 @@ public class MainViewModel extends AndroidViewModel {
         todoDAO = db.todoDAO();
 
         executorService = Executors.newSingleThreadExecutor();
+//        AllTodos = getAll();
     }
 
     public LiveData<List<Todo>> getAll(){
@@ -40,6 +44,10 @@ public class MainViewModel extends AndroidViewModel {
 
     public void save(Todo todo){
         executorService.execute(() -> todoDAO.insert(todo));
+    }
+
+    public void saveNewTodo() {
+        save(new Todo(newTodoTitle, newTodoTitle));
     }
 
     public void delete(){
