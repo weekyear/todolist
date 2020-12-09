@@ -2,6 +2,8 @@ package com.weekyear.todolist.models;
 
 import android.os.Build;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -64,5 +66,26 @@ public class Todo {
             this.date = new Date();
         }
         this.isCompleted = false;
+    }
+
+    public static DiffUtil.ItemCallback<Todo> DIFF_CALLBACK = new  DiffUtil.ItemCallback<Todo>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Todo oldItem, @NonNull Todo newItem) {
+            return oldItem.id == newItem.id;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Todo oldItem, @NonNull Todo newItem) {
+            return oldItem.equals(newItem);
+        }
+
+    };
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        Todo myEntity = (Todo) obj;
+        return myEntity.id == this.id && myEntity.title == this.title;
     }
 }
