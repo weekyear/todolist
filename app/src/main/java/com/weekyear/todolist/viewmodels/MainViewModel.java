@@ -35,7 +35,6 @@ public class MainViewModel extends AndroidViewModel {
         todoDAO = db.todoDAO();
 
         executorService = Executors.newSingleThreadExecutor();
-//        AllTodos = getAll();
     }
 
     public LiveData<List<Todo>> getAll(){
