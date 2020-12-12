@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 
+import com.weekyear.todolist.helper.ListLiveData;
 import com.weekyear.todolist.models.Todo;
 import com.weekyear.todolist.room.AppDatabase;
 import com.weekyear.todolist.room.TodoDAO;
@@ -34,6 +35,7 @@ public class MainViewModel extends AndroidViewModel {
         todoDAO = db.todoDAO();
 
         executorService = Executors.newSingleThreadExecutor();
+        getAll();
     }
 
     public LiveData<List<Todo>> getAll(){
