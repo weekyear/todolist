@@ -67,19 +67,6 @@ public class Todo {
         this.isCompleted = false;
     }
 
-    public static DiffUtil.ItemCallback<Todo> DIFF_CALLBACK = new  DiffUtil.ItemCallback<Todo>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull Todo oldItem, @NonNull Todo newItem) {
-            return oldItem.id == newItem.id;
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull Todo oldItem, @NonNull Todo newItem) {
-            return oldItem.equals(newItem);
-        }
-
-    };
-
     @Override
     public boolean equals(Object obj) {
         if (obj == this)

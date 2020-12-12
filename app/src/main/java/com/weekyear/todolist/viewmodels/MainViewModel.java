@@ -24,7 +24,6 @@ import java.util.concurrent.Executors;
 public class MainViewModel extends AndroidViewModel {
     public TodoDAO todoDAO;
     private ExecutorService executorService;
-    public LiveData<List<Todo>> AllTodos;
 
     public String newTodoTitle = "To-Do List";
 

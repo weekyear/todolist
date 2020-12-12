@@ -6,15 +6,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.AsyncListDiffer;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.weekyear.todolist.models.Todo;
 
-public class TodoAdapter extends ListAdapter<Todo, TodoAdapter.ItemViewHolder> {
+import java.util.List;
 
+public class TodoAdapter extends ListAdapter<Todo, TodoAdapter.ItemViewHolder> {
     public TodoAdapter() {
-        super(Todo.DIFF_CALLBACK);
+        super(DIFF_CALLBACK);
     }
 
     @NonNull
@@ -39,4 +43,16 @@ public class TodoAdapter extends ListAdapter<Todo, TodoAdapter.ItemViewHolder> {
             title = itemView.findViewById(android.R.id.text1);
         }
     }
+
+    public static DiffUtil.ItemCallback<Todo> DIFF_CALLBACK = new  DiffUtil.ItemCallback<Todo>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Todo oldItem, @NonNull Todo newItem) {
+            return oldItem.id == newItem.id;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Todo oldItem, @NonNull Todo newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
 }
