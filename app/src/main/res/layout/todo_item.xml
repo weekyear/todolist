@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="todo"
+            type="com.weekyear.todolist.models.Todo" />
+    </data>
+    <androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/itemCard"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_margin="2dp"
+        app:cardElevation="5dp"
+        app:contentPadding="10dp"
+        app:cardCornerRadius="15dp"
+        >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/completeCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="오늘 할 것들 겁나게 많구먼"
+                android:textSize="20sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

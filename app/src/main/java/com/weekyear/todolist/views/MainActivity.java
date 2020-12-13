@@ -17,6 +17,7 @@ import com.weekyear.todolist.R;
 import com.weekyear.todolist.databinding.ActivityMainBinding;
 import com.weekyear.todolist.helper.TodoAdapter;
 import com.weekyear.todolist.models.Todo;
+import com.weekyear.todolist.room.TodoRepository;
 import com.weekyear.todolist.viewmodels.MainViewModel;
 
 import java.util.List;
@@ -29,15 +30,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        adapter = new TodoAdapter();
+        TodoRepository.getRepo(this);
+
+        initViewModel();
+        initDataBinding();
+        initRecyclerView();
+    }
+
+    private void initViewModel() {
         ViewModelProvider.Factory factory = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication());
         viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
+    }
 
+    private void initDataBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setVm(viewModel);
         binding.setView(this);
+    }
 
-        viewModel.delete();
+    private void initRecyclerView() {
+        adapter = new TodoAdapter();
+        viewModel.getAll().observe(this, todos -> adapter.submitList(todos));
+        RecyclerView recyclerView=findViewById(R.id.todoRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void initTodos() {
+        TodoRepository.getRepo(null).delete();
         Todo[] initTodos = {
                 new Todo("1번 제목", "1번 내용"),
                 new Todo("2번 제목", "2번 내용"),
@@ -47,18 +67,13 @@ public class MainActivity extends AppCompatActivity {
                 new Todo("6번 제목", "6번 내용"),
         };
         for (int i = 0; i < initTodos.length; i++) {
-            viewModel.save(initTodos[i]);
+            TodoRepository.getRepo(null).save(initTodos[i]);
         }
-
-        viewModel.getAll().observe(this, todos -> adapter.submitList(todos));
-
-        RecyclerView recyclerView=findViewById(R.id.todoRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
     }
 
     public void onClick(View view) {
         viewModel.saveNewTodo();
+        binding.todoEditText.setText("");
         InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(binding.todoEditText.getWindowToken(), 0);
     }
