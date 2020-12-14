@@ -42,7 +42,9 @@ public class TodoRepository {
         executorService.execute(() -> todoDAO.insert(todo));
     }
 
-    public void delete(){
-        executorService.execute(() -> todoDAO.deleteAll());
+    public void delete(Todo todo){
+        executorService.execute(() -> todoDAO.delete(todo));
     }
+
+    public void deleteAll() { executorService.execute(() -> todoDAO.deleteAll());}
 }

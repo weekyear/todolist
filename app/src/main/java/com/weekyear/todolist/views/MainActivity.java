@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTodos() {
-        TodoRepository.getRepo(null).delete();
+        TodoRepository.getRepo(null).deleteAll();
         Todo[] initTodos = {
                 new Todo("1번 제목", "1번 내용"),
                 new Todo("2번 제목", "2번 내용"),

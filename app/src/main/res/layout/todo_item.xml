@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data>
-        <variable
-            name="todo"
-            type="com.weekyear.todolist.models.Todo" />
-    </data>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <androidx.cardview.widget.CardView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/itemCard"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
@@ -16,20 +11,30 @@
         app:cardCornerRadius="15dp"
         >
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/completeCheckBox"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
             <TextView
                 android:id="@+id/titleText"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="오늘 할 것들 겁나게 많구먼"
                 android:textSize="20sp"
-                android:gravity="center_vertical"/>
-        </LinearLayout>
+                app:layout_constraintStart_toEndOf="@id/completeCheckBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
