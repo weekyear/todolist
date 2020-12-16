@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         initViewModel();
         initDataBinding();
         initRecyclerView();
+        getSupportActionBar().hide();
     }
 
     private void initViewModel() {
